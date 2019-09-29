@@ -32,9 +32,20 @@ The below outlines the current parameters and defaults.
 
 None.
 
-## Examples
+### Example
 
-TODO.
+A simple example:
+
+```tf
+<% remote = %x{git remote -v}.split("\n")[0].split[1] -%>
+<%= %x{sed -E 's!source( +)=.*!source\\1= "#{remote}"!' examples/simple/main.tf} -%>
+```
+
+To apply that:
+
+```text
+▶ terraform apply
+```
 
 ## License
 

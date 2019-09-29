@@ -10,8 +10,8 @@
     * [Resources docs](#resources-docs)
     * [Inputs](#inputs)
     * [Outputs](#outputs)
-3. [Examples](#examples)
-4. [License](#license)
+    * [Example](#example)
+3. [License](#license)
 
 ## Overview
 
@@ -40,9 +40,22 @@ The below outlines the current parameters and defaults.
 
 None.
 
-## Examples
+### Example
 
-TODO.
+A simple example:
+
+```tf
+module "source" {
+  source      = "git@github.com:cmdlabs/terraform-aws-kms.git"
+  client_name = "our_awesome_client"
+}
+```
+
+To apply that:
+
+```text
+▶ terraform apply
+```
 
 ## License
 
