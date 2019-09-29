@@ -5,12 +5,6 @@ resource "aws_kms_alias" "kms" {
   target_key_id = aws_kms_key.main.key_id
 }
 
-# KMS requires that the creator has access to the key so you don't lock yourself out
-locals {
-  my_role_name = split("/", data.aws_caller_identity.current.arn)[1]
-  my_role_arn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${local.my_role_name}"
-}
-
 resource "aws_kms_key" "main" {
   description = "KMS Key Deploy Secrets"
   policy      = data.aws_iam_policy_document.main.json
@@ -24,7 +18,7 @@ data "aws_iam_policy_document" "main" {
       type = "AWS"
       identifiers = [
         "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.client_name}-role-console-breakglass",
-        local.my_role_arn,
+        data.aws_caller_identity.current.arn
       ]
     }
     actions = [
