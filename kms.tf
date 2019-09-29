@@ -19,7 +19,7 @@ data "aws_iam_policy_document" "main" {
       identifiers = [
         "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.client_name}-role-console-breakglass",
         "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
-        data.aws_caller_identity.current.arn
+        data.aws_caller_identity.current.arn,
       ]
     }
     actions = [
@@ -46,7 +46,7 @@ data "aws_iam_policy_document" "main" {
     principals {
       type = "AWS"
       identifiers = [
-        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.client_name}-role-console-breakglass"
+        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.client_name}-role-console-breakglass",
       ]
     }
     actions = [
@@ -64,7 +64,7 @@ data "aws_iam_policy_document" "main" {
     principals {
       type = "AWS"
       identifiers = [
-        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.client_name}-role-console-breakglass"
+        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.client_name}-role-console-breakglass",
       ]
     }
     actions = [
@@ -81,7 +81,7 @@ data "aws_iam_policy_document" "main" {
       "kms:ScheduleKeyDeletion",
       "kms:CancelKeyDeletion",
       "kms:TagResource",
-      "kms:UntagResource"
+      "kms:UntagResource",
     ]
     resources = ["*"]
   }
@@ -101,7 +101,7 @@ data "aws_iam_policy_document" "main" {
     }
     actions = [
       "kms:CreateGrant",
-      "kms:RevokeGrant"
+      "kms:RevokeGrant",
     ]
     resources = ["*"]
   }
@@ -111,7 +111,7 @@ data "aws_iam_policy_document" "main" {
     principals {
       type = "AWS"
       identifiers = [
-        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.client_name}-role-console-breakglass"
+        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.client_name}-role-console-breakglass",
       ]
     }
     actions = [
@@ -128,7 +128,7 @@ data "aws_iam_policy_document" "main" {
     principals {
       type = "AWS"
       identifiers = [
-        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.client_name}-role-console-breakglass"
+        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.client_name}-role-console-breakglass",
       ]
     }
     actions = [
@@ -143,7 +143,7 @@ data "aws_iam_policy_document" "main" {
     principals {
       type = "AWS"
       identifiers = [
-        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
       ]
     }
     actions = [
@@ -161,13 +161,13 @@ data "aws_iam_policy_document" "main" {
     principals {
       type = "AWS"
       identifiers = [
-        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
       ]
     }
     actions = [
       "kms:CreateGrant",
       "kms:ListGrants",
-      "kms:RevokeGrant"
+      "kms:RevokeGrant",
     ]
     condition {
       test     = "Bool"
