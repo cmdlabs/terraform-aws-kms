@@ -14,6 +14,16 @@ testSimple() {
   cd ..
 }
 
+testKey() {
+  read -r enabled key_usage key_state <<< "$(
+    aws kms describe-key --key-id 'alias/secrets' --query \
+      'KeyMetadata.[Enabled, KeyUsage, KeyState]' --output 'text'
+  )"
+  assertEquals "enabled should be True" "True" "$enabled"
+  assertEquals "KeyUsage should be ENCRYPT_DECRYPT" "ENCRYPT_DECRYPT" "$key_usage"
+  assertEquals "KeyState should be Enabled" "Enabled" "$key_state"
+}
+
 oneTimeTearDown() {
   if [ "$NO_TEARDOWN" != "true" ] ; then
     cd simple
