@@ -14,12 +14,8 @@ err() {
 }
 
 vars=(
-  AGGREGATOR_AWS_ACCESS_KEY_ID
-  AGGREGATOR_AWS_SECRET_ACCESS_KEY
-  SOURCE_AWS_ACCESS_KEY_ID
-  SOURCE_AWS_SECRET_ACCESS_KEY
-  TF_VAR_aggregator_account_id
-  TF_VAR_source_account_id
+  AWS_ACCESS_KEY_ID
+  AWS_SECRET_ACCESS_KEY
 )
 
 for tf_var in "${vars[@]}" ; do
