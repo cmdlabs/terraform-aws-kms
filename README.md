@@ -38,7 +38,11 @@ The below outlines the current parameters and defaults.
 
 ### Outputs
 
-None.
+|Name|Description|
+|------------|---------------------|
+|key_id|The globally unique identifier for the key|
+|key_arn|The Amazon Resource Name (ARN) of the key|
+|key_alias_arn|The Amazon Resource Name (ARN) of the key alias|
 
 ### Example
 
