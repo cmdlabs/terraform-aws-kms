@@ -3,21 +3,13 @@
 
 # terraform-aws-kms
 
-#### Table of contents
-
-1. [Overview](#overview)
-2. [AWS KMS Terraform](#aws-kms-terraform)
-    * [Resources docs](#resources-docs)
-    * [Inputs](#inputs)
-    * [Outputs](#outputs)
-3. [Examples](#examples)
-4. [License](#license)
+<%= %x{ruby erb/toc.rb erb/README.erb} -%>
 
 ## Overview
 
 This module deploys a standard account KMS key for secrets encryption.
 
-Terraform >= 0.12.0 is required for this module.
+Terraform <%= %x[awk -F '"' '/required_version/ {print $2}' versions.tf].chomp -%> is required for this module.
 
 ## AWS KMS Terraform
 
@@ -34,7 +26,7 @@ The below outlines the current parameters and defaults.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-------:|:--------:|
-|client_name|Name of the organisation, used in generating IAM role names|string|""|No|
+<%= %x{ruby erb/variables2md.rb variables.tf} -%>
 
 ### Outputs
 
