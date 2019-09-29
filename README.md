@@ -34,7 +34,7 @@ The below outlines the current parameters and defaults.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-------:|:--------:|
-|client_name|Name of the organisation, used in generating IAM role names|string|""|No|
+|client_name|Name of the organisation, used in generating IAM role names|string|""|Yes|
 
 ### Outputs
 
