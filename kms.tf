@@ -7,8 +7,9 @@ resource "aws_kms_alias" "kms" {
 
 # KMS requires that the creator has access to the key so you don't lock yourself out
 locals {
-  my_role_name = split("/", data.aws_caller_identity.current.arn)[1]
-  my_role_arn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${local.my_role_name}"
+  current_arn        = data.aws_caller_identity.current.arn
+  current_account_id = data.aws_caller_identity.current.account_id
+  my_role_arn        = length(regexall("/", local.current_arn)) > 0 ? "arn:aws:iam::${local.current_account_id}:role/${split("/", local.current_arn)[1]}" : local.current_arn
 }
 
 resource "aws_kms_key" "main" {

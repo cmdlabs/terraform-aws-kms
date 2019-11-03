@@ -17,7 +17,7 @@
 
 This module deploys a standard account KMS key for secrets encryption.
 
-Terraform >= 0.12.0 is required for this module.
+Terraform >= 0.12.7 is required for this module.
 
 ## AWS KMS Terraform
 
