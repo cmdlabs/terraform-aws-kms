@@ -1,20 +1,20 @@
-data "aws_caller_identity" "current" {
-}
+data "aws_caller_identity" "current" {}
 
 resource "aws_kms_alias" "kms" {
   name          = "alias/secrets"
-  target_key_id = "${aws_kms_key.main.key_id}"
+  target_key_id = aws_kms_key.main.key_id
 }
 
 # KMS requires that the creator has access to the key so you don't lock yourself out
 locals {
-  my_role_name = "${split("/", data.aws_caller_identity.current.arn)[1]}"
-  my_role_arn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${local.my_role_name}"
+  current_arn        = data.aws_caller_identity.current.arn
+  current_account_id = data.aws_caller_identity.current.account_id
+  my_role_arn        = length(regexall("/", local.current_arn)) > 0 ? "arn:aws:iam::${local.current_account_id}:role/${split("/", local.current_arn)[1]}" : local.current_arn
 }
 
 resource "aws_kms_key" "main" {
   description = "KMS Key Deploy Secrets"
-  policy      = "${data.aws_iam_policy_document.main.json}"
+  policy      = data.aws_iam_policy_document.main.json
 }
 
 data "aws_iam_policy_document" "main" {
@@ -25,7 +25,7 @@ data "aws_iam_policy_document" "main" {
       type = "AWS"
       identifiers = [
         "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.client_name}-role-console-breakglass",
-        "${local.my_role_arn}",
+        local.my_role_arn,
       ]
     }
     actions = [
@@ -52,7 +52,7 @@ data "aws_iam_policy_document" "main" {
     principals {
       type = "AWS"
       identifiers = [
-        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.client_name}-role-console-breakglass"
+        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.client_name}-role-console-breakglass",
       ]
     }
     actions = [
@@ -70,7 +70,7 @@ data "aws_iam_policy_document" "main" {
     principals {
       type = "AWS"
       identifiers = [
-        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.client_name}-role-console-breakglass"
+        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.client_name}-role-console-breakglass",
       ]
     }
     actions = [
@@ -87,7 +87,7 @@ data "aws_iam_policy_document" "main" {
       "kms:ScheduleKeyDeletion",
       "kms:CancelKeyDeletion",
       "kms:TagResource",
-      "kms:UntagResource"
+      "kms:UntagResource",
     ]
     resources = ["*"]
   }
@@ -107,7 +107,7 @@ data "aws_iam_policy_document" "main" {
     }
     actions = [
       "kms:CreateGrant",
-      "kms:RevokeGrant"
+      "kms:RevokeGrant",
     ]
     resources = ["*"]
   }
@@ -117,7 +117,7 @@ data "aws_iam_policy_document" "main" {
     principals {
       type = "AWS"
       identifiers = [
-        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.client_name}-role-console-breakglass"
+        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.client_name}-role-console-breakglass",
       ]
     }
     actions = [
@@ -134,7 +134,7 @@ data "aws_iam_policy_document" "main" {
     principals {
       type = "AWS"
       identifiers = [
-        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.client_name}-role-console-breakglass"
+        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.client_name}-role-console-breakglass",
       ]
     }
     actions = [
@@ -149,7 +149,7 @@ data "aws_iam_policy_document" "main" {
     principals {
       type = "AWS"
       identifiers = [
-        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
       ]
     }
     actions = [
@@ -167,13 +167,13 @@ data "aws_iam_policy_document" "main" {
     principals {
       type = "AWS"
       identifiers = [
-        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
       ]
     }
     actions = [
       "kms:CreateGrant",
       "kms:ListGrants",
-      "kms:RevokeGrant"
+      "kms:RevokeGrant",
     ]
     condition {
       test     = "Bool"

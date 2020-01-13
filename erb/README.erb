@@ -3,21 +3,13 @@
 
 # terraform-aws-kms
 
-#### Table of contents
-
-1. [Overview](#overview)
-2. [AWS KMS Terraform](#aws-kms-terraform)
-    * [Resources docs](#resources-docs)
-    * [Inputs](#inputs)
-    * [Outputs](#outputs)
-    * [Example](#example)
-3. [License](#license)
+<%= %x{ruby erb/toc.rb erb/README.erb} -%>
 
 ## Overview
 
 This module deploys a standard account KMS key for secrets encryption.
 
-Terraform >= 0.12.7 is required for this module.
+Terraform <%= %x[awk -F '"' '/required_version/ {print $2}' versions.tf].chomp -%> is required for this module.
 
 ## AWS KMS Terraform
 
@@ -34,50 +26,21 @@ The below outlines the current parameters and defaults.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-------:|:--------:|
-|client_name|Name of the organisation, used in generating IAM role names|string|""|Yes|
+<%= %x{ruby erb/variables2md.rb variables.tf} -%>
 
 ### Outputs
 
 |Name|Description|
 |------------|---------------------|
-|key_id|The globally unique identifier for the key|
-|key_arn|The Amazon Resource Name (ARN) of the key|
-|key_alias_arn|The Amazon Resource Name (ARN) of the key alias|
+<%= %x{ruby erb/outputs2md.rb outputs.tf} -%>
 
 ### Example
 
 A simple example:
 
 ```tf
-locals {
-  client_name = "our_awesome_client"
-  role_name   = "${local.client_name}-role-console-breakglass"
-}
-
-resource "aws_iam_role" "our_awesome_client" {
-  name = local.role_name
-
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
-}
-EOF
-}
-
-module "source" {
-  source      = "git@github.com:cmdlabs/terraform-aws-kms.git"
-  client_name = "our_awesome_client"
-}
+<% remote = %x{git remote -v}.split("\n")[0].split[1] -%>
+<%= %x{sed -E 's!source( +)=.*!source\\1= "#{remote}"!' examples/simple/main.tf} -%>
 ```
 
 To apply that:
