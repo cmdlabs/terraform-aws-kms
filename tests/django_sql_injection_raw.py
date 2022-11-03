@@ -10,4 +10,3 @@ raw = '"username") AS "val" FROM "auth_user"' \
       ' WHERE "username"="admin" OR 1=%s --'
 User.objects.annotate(val=RawSQL(raw, [0]))
 
-
